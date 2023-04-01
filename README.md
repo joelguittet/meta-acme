@@ -13,7 +13,7 @@ This layer depends on the additional mandatory layers:
 * meta-openembedded/meta-networking
 * meta-atmel
 
-Examples to use this layer are available in my Github at https://github.com/myfreescalewebpage/meta-acme-examples.
+Examples to use this layer are available in my Github at https://github.com/joelguittet/meta-acme-examples.
 
 
 Philosophy of this meta layer
@@ -69,11 +69,11 @@ Clone sources:
 	git clone --branch rocko git://git.yoctoproject.org/poky.git ~/yocto/poky
 	git clone --branch rocko git://git.openembedded.org/meta-openembedded ~/yocto/meta-openembedded
 	git clone --branch rocko https://github.com/linux4sam/meta-atmel ~/yocto/meta-atmel
-	git clone https://github.com/myfreescalewebpage/meta-acme.git ~/yocto/meta-acme
+	git clone https://github.com/joelguittet/meta-acme.git ~/yocto/meta-acme
 
 Get Acme Systems tools:
 
-	git clone https://github.com/myfreescalewebpage/acme-tools ~/yocto/acme-tools
+	git clone https://github.com/joelguittet/acme-tools ~/yocto/acme-tools
 
 Create images directory:
 
