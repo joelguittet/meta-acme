@@ -21,7 +21,7 @@ Philosophy of this meta layer
 
 The main positions of this meta layer are the following:
 * A single meta layer for all Acme Systems boards. Today, Arietta-G25 and Arietta-G25-256 are supported.
-* The same baseline for all boards: same boostrap version (3.8.11), the same u-boot version (2017.03), the same kernel version (4.9), the same default kernel configuration. Only the specificities of the hardware differ (device tree).
+* The same baseline for all boards: same boostrap version (3.10.3), the same u-boot version (2022.01), the same kernel version (5.4), the same default kernel configuration. Only the specificities of the hardware differ (device tree).
 * A step by step tutorial to help you building and flashing your first Acme Systems board (see chapter Using just below).
 * Some simple tools to flash the boards (a single script to launch).
 
@@ -59,16 +59,17 @@ The following tutorial is useful to start building your own Yocto project and lo
 **_1- Install System Dependencies (once)_**
 
 	sudo apt-get update && sudo apt-get upgrade
-	sudo apt-get install gawk wget git-core diffstat unzip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm lzop u-boot-tools git build-essential curl libusb-1.0-0-dev python-pip minicom libncurses5-dev
+	sudo apt install gawk wget git diffstat unzip texinfo gcc build-essential chrpath socat cpio python3 python3-pip python3-pexpect xz-utils debianutils iputils-ping python3-git python3-jinja2 libegl1-mesa libsdl1.2-dev pylint3 xterm python3-subunit mesa-common-dev zstd liblz4-tool
 	sudo pip install --upgrade pip && sudo pip install pyserial
 
 **_2- Get sources and flashing tools (once)_**
 
 Clone sources:
 
-	git clone --branch rocko git://git.yoctoproject.org/poky.git ~/yocto/poky
-	git clone --branch rocko git://git.openembedded.org/meta-openembedded ~/yocto/meta-openembedded
-	git clone --branch rocko https://github.com/linux4sam/meta-atmel ~/yocto/meta-atmel
+	git clone --branch kirkstone git://git.yoctoproject.org/poky.git ~/yocto/poky
+	git clone --branch kirkstone git://git.openembedded.org/meta-openembedded ~/yocto/meta-openembedded
+	git clone --branch kirkstone git://git.yoctoproject.org/meta-arm ~/yocto/meta-arm
+	git clone --branch kirkstone https://github.com/linux4sam/meta-atmel ~/yocto/meta-atmel
 	git clone https://github.com/joelguittet/meta-acme.git ~/yocto/meta-acme
 
 Get Acme Systems tools:
@@ -95,6 +96,8 @@ Add layers to the configuration file ~/yocto/build/conf/bblayers.conf:
 	  ${TOPDIR}/../meta-openembedded/meta-oe \
 	  ${TOPDIR}/../meta-openembedded/meta-python \
 	  ${TOPDIR}/../meta-openembedded/meta-networking \
+	  ${TOPDIR}/../meta-arm/meta-arm \
+	  ${TOPDIR}/../meta-arm/meta-arm-toolchain \
 	  ${TOPDIR}/../meta-atmel \
 	  ${TOPDIR}/../meta-acme \
 	"
@@ -130,12 +133,11 @@ Build minimal image:
 Copy files in the images directory (replace acme-image-minimal-arietta-g25.tar.gz by the wanted rootfs if you have build another image):
 
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25/BOOT.BIN ~/yocto/images
-	cp ~/yocto/build/tmp/deploy/images/arietta-g25/u-boot.BIN ~/yocto/images
+	cp ~/yocto/build/tmp/deploy/images/arietta-g25/u-boot.bin ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25/uboot.env ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25/at91-ariettag25.dtb ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25/zImage ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25/acme-image-minimal-arietta-g25.tar.gz ~/yocto/images/rootfs.tar.gz
-	cp ~/yocto/build/tmp/deploy/images/arietta-g25/modules-arietta-g25.tgz ~/yocto/images/modules.tar.gz
 
 Then insert the SD card on your computer and flash the target (replace sdb by the right SD card drive name if you have another one, you can check it running 'dmesg' after inserting the SD card):
 
@@ -154,7 +156,6 @@ Copy files in the images directory (replace acme-image-minimal-arietta-g25-256.t
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25-256/at91-ariettag25.dtb ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25-256/zImage ~/yocto/images
 	cp ~/yocto/build/tmp/deploy/images/arietta-g25-256/acme-image-minimal-arietta-g25-256.tar.gz ~/yocto/images/rootfs.tar.gz
-	cp ~/yocto/build/tmp/deploy/images/arietta-g25-256/modules-arietta-g25-256.tgz ~/yocto/images/modules.tar.gz
 
 Then insert the SD card on your computer and flash the target (replace sdb by the right SD card drive name if you have another one, you can check it running 'dmesg' after inserting the SD card):
 

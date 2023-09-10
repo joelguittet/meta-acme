@@ -2,7 +2,7 @@
 #@NAME: Arietta include
 #@DESCRIPTION: Machine configuration for ACME Systems Arietta-G25 boards
 
-require conf/machine/include/tune-arm926ejs.inc
+require conf/machine/include/arm/armv5/tune-arm926ejs.inc
 
 PREFERRED_PROVIDER_virtual/kernel ?= "linux-at91"
 PREFERRED_PROVIDER_virtual/bootloader ?= "u-boot-at91"
@@ -19,5 +19,5 @@ AT91BOOTSTRAP_LOAD = "sdboot-uboot"
 
 UBOOT_MACHINE = "at91sam9x5ek_mmc_defconfig"
 
-IMAGE_INSTALL_append = " kernel-modules"
+IMAGE_INSTALL:append = " kernel-modules"
 EXTRA_IMAGEDEPENDS += "u-boot-at91 at91bootstrap"

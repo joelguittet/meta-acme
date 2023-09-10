@@ -4,9 +4,9 @@ PACKAGE_ARCH = "${MACHINE_ARCH}"
 
 inherit packagegroup
 
-RDEPENDS_${PN} = " \
+RDEPENDS:${PN} = " \
   packagegroup-base-wifi \
   linux-firmware-ralink \
-  dhcp-client \
+  dhcpcd \
   crda \
 "
